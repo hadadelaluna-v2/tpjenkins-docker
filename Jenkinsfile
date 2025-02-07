@@ -6,13 +6,13 @@ pipeline {
     }
     
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('hadadelaluna-v2')
+        DOCKERHUB_CREDENTIALS = credentials('hadadeluna')
     }
     
     stages {
         stage('Build') {
             steps {
-                sh 'docker build -t hadadelaluna-v2/tpjenkins-docker:latest .'
+                sh 'docker build -t hadadeluna/tpjenkins-docker:latest .'
             }
         }
         
@@ -24,14 +24,16 @@ pipeline {
         
         stage('Push') {
             steps {
-                sh 'docker push hadadelaluna-v2/tpjenkins-docker:latest'
+                sh 'docker push hadadeluna/tpjenkins-docker:latest'
             }
         }
     }
     
     post {
         always {
-            sh 'docker logout'
+            script {
+                sh 'docker logout'
+            }
         }
     }
 }
