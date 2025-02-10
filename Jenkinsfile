@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                node {
+                node('any') {
                     sh 'docker build -t hadadeluna/tpjenkins-docker:latest .'
                 }
             }
@@ -20,7 +20,7 @@ pipeline {
 
         stage('Login') {
             steps {
-                node {
+                node('any') {
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 }
             }
@@ -28,7 +28,7 @@ pipeline {
 
         stage('Push') {
             steps {
-                node {
+                node('any') {
                     sh 'docker push hadadeluna/tpjenkins-docker:latest'
                 }
             }
@@ -37,7 +37,7 @@ pipeline {
 
     post {
         always {
-            node {
+            node('any') {
                 script {
                     try {
                         sh 'docker logout'
